@@ -15,14 +15,19 @@
 	//쿼리와 자바 변수이름의 불일치할 때는 쿼리의 Alias 이용하여 이름 맞춰주기
 	PreparedStatement stmt=conn.prepareStatement(sql);
 	stmt.setString(1, deptNo); 
-	ResultSet rs = stmt.executeQuery(); 
+	ResultSet rs=stmt.executeQuery(); 
 	
 	String deptName=null;
+	ArrayList<Department> list = new ArrayList<Department>();
 	
 	if(rs.next()) { 
-		deptName=rs.getString("deptName");
+		Department d=new Department();
+		d.deptName=rs.getString("deptName");
+		list.add(d);
+		deptName=d.deptName;
 	}
-		
+	
+	
 		
 %>
 

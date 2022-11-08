@@ -14,10 +14,10 @@
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn=DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
 	
-	String sql="update departments set deptNo=?, deptName=?"; 
-	PreparedStatement stmt=conn.prepareStatement(sql);  // no은 윗줄의 ?를 채울 값
-	stmt.setString(1, deptNo);
-	stmt.setString(2, deptName);
+	String sql="UPDATE departments SET dept_name=? WHERE dept_no=?"; 
+	PreparedStatement stmt=conn.prepareStatement(sql);  
+	stmt.setString(1, deptName);
+	stmt.setString(2, deptNo);
 	
 	int row=stmt.executeUpdate();
 

@@ -17,7 +17,7 @@
 			</a>
 		</li>
 		<li>
-			<a href="<%=request.getContextPath()%>/dept/DeptForm.jsp">
+			<a href="<%=request.getContextPath()%>/dept/insertDeptForm.jsp">
 				부서추가
 			</a>
 		</li>
