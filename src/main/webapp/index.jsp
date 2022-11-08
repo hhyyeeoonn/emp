@@ -6,6 +6,7 @@
 <title>index</title>
 </head>
 <body>
-
+<%
+%>
 </body>
 </html>
