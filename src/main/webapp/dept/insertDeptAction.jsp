@@ -14,13 +14,13 @@
 		String msg=URLEncoder.encode("부서번호와 부서명을 입력하세요", "utf-8"); // get방식 주소창에 문자열 인코딩 브라우저에 맞게 인코딩해줌 매개변수 두 개...?
 		response.sendRedirect(request.getContextPath() + "/dept/insertDeptForm.jsp?msg="+msg);// <- 분기 메세지값이 있을 때
 		return;
-	} else if((deptNo == null || deptNo.equals("")) && deptName != null) {
-		String msg=URLEncoder.encode("부서번호를 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath() + "/dept/insertDeptForm.jsp?msg="+msg);
+	} else if(deptNo != null && (deptName == null || deptName.equals(""))) {
+		String msg1=URLEncoder.encode("부서명을 입력하세요", "utf-8");
+		response.sendRedirect(request.getContextPath() + "/dept/insertDeptForm2.jsp?msg1="+msg1+"&deptNo="+deptNo);
 		return;	
-	} else if(deptNo != null && (deptName.equals("") || deptName == null)) {
-		String msg=URLEncoder.encode("부서명을 입력하세요", "utf-8");
-		response.sendRedirect(request.getContextPath() + "/dept/insertDeptForm.jsp?msg="+msg);
+	} else if(deptName != null && (deptNo.equals("") || deptNo == null)) {
+		String msg2=URLEncoder.encode("부서번호를 입력하세요", "utf-8");
+		response.sendRedirect(request.getContextPath() + "/dept/insertDeptForm2.jsp?msg2="+msg2+"&deptName="+deptName);
 		return;
 	}
 	

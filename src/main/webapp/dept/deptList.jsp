@@ -75,8 +75,6 @@
 		</table>
 	</div>
 	<br>
-	<div>
-		<button type="button" onclick="location.href='<%=request.getContextPath()%>/index.jsp';"><-index</button>
-	</div>
+	
 </body>
 </html>

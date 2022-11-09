@@ -24,28 +24,33 @@
 		
 	<!-- msg 파라메타 값이 있으면 출력 -->
 	<%
-		if(request.getParameter("msg") != null) {
+		if(request.getParameter("msg1") != null) {
 	%>
 		<div>
-		<h5><small><%=request.getParameter("msg")%></small></h5>
+		<h5><small><%=request.getParameter("msg1")%></small></h5>
+		</div>
+	<%
+		} else if(request.getParameter("msg2") != null) {
+	%>
+		<div>
+		<h5><small><%=request.getParameter("msg2")%></small></h5>
 		</div>
 	<%
 		}
 	%>
-		
-		
 	<form method="post" action="<%=request.getContextPath()%>/dept/insertDeptAction.jsp">
 		
+	<%
+		if(request.getParameter("msg1") != null) {
+	%>
 		<div>
 			<div>
 				부서번호
 			</div>
 			<div>
-				<input type="text" name="no">
+				<input type="text" name="no" value=<%=request.getParameter("deptNo")%>>
 			</div>
-		
 		</div>
-		
 		<div>
 			<div>
 				부서명
@@ -53,8 +58,29 @@
 			<div>
 				<input type="text" name="name">
 			</div>
-		
 		</div>
+	<%
+		} else if(request.getParameter("msg2") != null) {
+	%>
+		<div>
+			<div>
+				부서번호
+			</div>
+			<div>
+				<input type="text" name="no">
+			</div>
+		</div>
+		<div>
+			<div>
+				부서명
+			</div>
+			<div>
+				<input type="text" name="name" value=<%=request.getParameter("deptName")%>>
+			</div>
+		</div>
+	<%
+		}
+	%>
 		
 		<div>
 			<button type="submit" class="btn btn-outline-success">정보등록</button>
