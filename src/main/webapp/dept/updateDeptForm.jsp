@@ -6,7 +6,10 @@
 <%
 	//1.요청분석
 	String deptNo=request.getParameter("deptNo");
-
+	if(deptNo==null) { // deptList의 링크로 호출하지 않고 updat폼을 주소창에 직접 호출하면 deptNo는 null값이 된다 
+		response.sendRedirect(request.getContextPath()+"/dept/deptList.jsp");
+		return;
+	}
 	//2.요청처리
 	Class.forName("org.mariadb.jdbc.Driver"); //드라이버로딩
 	System.out.println("드라이버 로딩 성공"); 				//>>>>>>>>>>>>>>>디버깅코드
@@ -18,7 +21,7 @@
 	ResultSet rs=stmt.executeQuery(); 
 	
 	String deptName=null;
-	ArrayList<Department> list = new ArrayList<Department>();
+	ArrayList<Department> list = new ArrayList<Department>(); //어차피 데이터는 하나니까 굳이 배열을 만들 필요가 없겠구나...
 	
 	if(rs.next()) { 
 		Department d=new Department();
@@ -27,10 +30,18 @@
 		deptName=d.deptName;
 	}
 	
+	/* 하나의 단위는 하나로 묶기
 	
-		
+	Department dept=null;
+	
+	if(rs.next()) { //ResultSet의 API(사용방법)를 모르다면 사용할 수 없는 반복문 
+		dept=new Department();
+		dept.deptNo=deptNo;
+		dept.deptName=rs.getString(deptName);
+	}
+	
+	*/
 %>
-
 
 <!DOCTYPE html>
 <html>
@@ -55,7 +66,7 @@
 				부서번호
 			</div>
 			<div>
-				<input type="text" name="deptNo" value=<%=deptNo%>>
+				<input type="text" name="deptNo" value=<%=deptNo%> readonly="readonly"> <!-- %=dept.No% -->
 			</div>
 		
 		</div>
@@ -65,7 +76,7 @@
 				부서명
 			</div>
 			<div>
-				<input type="text" name="deptName" value=<%=deptName%>>
+				<input type="text" name="deptName" value=<%=deptName%>> <!-- %=dept.Name% -->
 			</div>
 		
 		</div>

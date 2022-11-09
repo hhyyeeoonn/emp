@@ -21,6 +21,11 @@
 				부서추가
 			</a>
 		</li>
+		<li>
+			<a href="<%=request.getContextPath()%>/emp/empList.jsp">
+				사원관리
+			</a>
+		</li>
 	</ol>
 </body>
 </html>

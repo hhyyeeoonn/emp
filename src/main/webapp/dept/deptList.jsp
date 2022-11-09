@@ -36,6 +36,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 메뉴 - 부분페이지로... partial jsp 구성-->
+	<div> <!-- jsp 액션태그 모델원에 사용하려고 탄생함 %와 같은 역할-->
+		<jsp:include page="/inc/menu.jsp"></jsp:include> <!-- 서버가 주체 include는 절대주소를 적을 때 context가 필요없다 이미 같은 emp안에 있으니까(?) -->
+	
+	</div>
+
 	<h1>DEPT LIST</h1>
 	<div>
 		<table>
