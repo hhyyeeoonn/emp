@@ -66,7 +66,7 @@
 				부서번호
 			</div>
 			<div>
-				<input type="text" name="deptNo" value=<%=deptNo%> readonly="readonly"> <!-- %=dept.No% -->
+				<input type="text" name="deptNo" value=<%=deptNo%> readonly="readonly"> 
 			</div>
 		
 		</div>

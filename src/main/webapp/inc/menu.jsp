@@ -6,3 +6,4 @@
 <a href="<%=request.getContextPath()%>/dept/">-사원관리-</a>
 <a href="<%=request.getContextPath()%>"></a>
 <a href="<%=request.getContextPath()%>"></a>
+<a href="<%=request.getContextPath()%>/board/boardList.jsp">게시판 관리</a>

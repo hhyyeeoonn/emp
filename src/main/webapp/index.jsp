@@ -26,6 +26,11 @@
 				사원관리
 			</a>
 		</li>
+		<li>
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp">
+				게시판 관리
+			</a>
+		</li>
 	</ol>
 </body>
 </html>
