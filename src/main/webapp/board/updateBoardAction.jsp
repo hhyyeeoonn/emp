@@ -9,11 +9,18 @@
 	request.setCharacterEncoding("utf-8");
 	
 	int boardNo=Integer.parseInt(request.getParameter("no"));
-	String boardPw=request.getParameter("no");
+	String boardPw=request.getParameter("pw");
 	String boardTitle=request.getParameter("title");
 	String boardContent=request.getParameter("memo");
 	String boardWriter=request.getParameter("name");
-	String pw=request.getParameter("pw");
+	
+	
+	System.out.println(boardNo);
+	System.out.println(boardPw);
+	System.out.println(boardTitle);
+	System.out.println(boardWriter);
+	System.out.println(boardContent);
+	
 	
 	if(boardTitle == null || boardContent == null || boardWriter == null ||
 		boardTitle.equals("") || boardContent.equals("") || boardWriter.equals("")) {
@@ -25,27 +32,33 @@
 	//2.요청처리
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn=DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
+	System.out.println("드라이버 로딩"); 
 	
-	String PwSql="SELECT board_pw boardPw FROM board WHERE board_no=? AND board_pw=?"; 
+	
+	/*
+	String PwSql="SELECT board_pw boardPw FROM board WHERE board_no=?"; 
 	PreparedStatement pwStmt=conn.prepareStatement(PwSql);  
 	pwStmt.setInt(1, boardNo);
-	pwStmt.setString(2, boardPw);
 	ResultSet pwRs=pwStmt.executeQuery(); 
 	
+	
+	String password=null;
+	
 	if(pwRs.next()){
-		System.out.println("pwRs.next()값");
-	}
-	
-	if(pwRs.next() && boardPw != pwRs.getString("boardPw")){
-		String msg=URLEncoder.encode("비밀번호를 확인해주세요", "utf-8");
-		response.sendRedirect(request.getContextPath() + "/board/updateBoardForm.jsp?msg="+msg);
-		return;
+		password=pwRs.getString("boardPw");
 	} 
+
+	if(boardPw != password) {
+		System.out.println("비밀번호");
+		String msg=URLEncoder.encode("비밀번호를 확인하세요", "utf-8");
+		response.sendRedirect(request.getContextPath() + "/board/updateBoardForm.jsp?boardNo="+boardNo+"&msg="+msg);
+		return;
+	}
+	*/
 	
 	
-
-
-	String sql="UPDATE board SET boardTitle=?, board_content boardContent=?, boardWriter=?, createdate=CURDATE() WHERE board_no=?"; 
+	
+	String sql="UPDATE board SET board_title=?, board_content=?, board_writer=?, createdate=CURDATE() WHERE board_no=?"; 
 	PreparedStatement stmt=conn.prepareStatement(sql);  
 	stmt.setString(1, boardTitle);
 	stmt.setString(2, boardContent);
@@ -55,7 +68,7 @@
 	int row=stmt.executeUpdate();
 
 	//>>>>>>>>>디버깅코드
-	if(row==4) { 
+	if(row==1) { 
 		System.out.println("수정성공");
 	} else {
 		System.out.println("수정실패");
@@ -63,5 +76,5 @@
 
 	
 	//3.출력
-	response.sendRedirect(request.getContextPath()+"/board/boardOne.jsp");
+	response.sendRedirect(request.getContextPath()+"/board/boardOne.jsp?boardNo="+boardNo);
 %>

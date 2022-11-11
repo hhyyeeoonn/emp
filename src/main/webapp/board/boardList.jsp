@@ -30,9 +30,6 @@
 	// 나누어 떨어지면 그대로 나누어 떨어지지 않으면 +1 double은 5가 아니가 5.0이므로 int로 변환
 	int lastPage=(int)(Math.ceil((double)cnt / (double)ROW_PER_PAGE)); //소수점으로 계산되므로 올림
 	
-	
-
-	
 	String listSql="SELECT board_no boardNo, board_title boardTitle FROM board ORDER BY board_no DESC LIMIT ?, ?";
 	PreparedStatement listStmt=conn.prepareStatement(listSql);
 	listStmt.setInt(1, beginRow); //int beginRow=(currentPage-1)*ROW_PER_PAGE;
@@ -46,8 +43,6 @@
 		b.boardTitle=listRs.getString("boardTitle");
 		boardList.add(b);
 	}
-
-
 
 %>
 
@@ -79,21 +74,18 @@
 				<th>No</th>
 				<th>제목</th>
 			</tr>
-		
-	
-	
 				<%
 					for(Board b : boardList) {
 				
 				%>
-				<tr>
-					<td><%=b.boardNo%></td>
-					<td> <!-- 제목을 클릭하면 상세보기로 이동 -->
-						<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
-							<%=b.boardTitle%>
-						</a>
-					</td>
-				</tr>
+			<tr>
+				<td><%=b.boardNo%></td>
+				<td> <!-- 제목을 클릭하면 상세보기로 이동 -->
+					<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
+						<%=b.boardTitle%>
+					</a>
+				</td>
+			</tr>
 				<%
 					}
 				%>

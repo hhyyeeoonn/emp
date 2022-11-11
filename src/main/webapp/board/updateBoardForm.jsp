@@ -7,14 +7,13 @@
 <%
 	//1.요청분석
 	String No=request.getParameter("boardNo");
-	
 	if(No == null) { // updateForm 주소창에 직접 호출하는 거 막기
 		response.sendRedirect(request.getContextPath()+"/board/boardList.jsp");
 		return;
 	}
+	
+	
 	int boardNo=Integer.parseInt(request.getParameter("boardNo"));
-	
-	
 	
 	//2.요청처리
 	Class.forName("org.mariadb.jdbc.Driver"); //드라이버로딩

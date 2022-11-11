@@ -25,20 +25,6 @@
 		board.boardWriter=boardRs.getString("boardWriter");
 		board.createdate=boardRs.getString("createdate");
 	}
-
-	// 2.2 댓글 목록
-	 
-	/*
-	댓글도 페이징이 필요하다
-	SELECT comment_no commentNo, comment_content commentContent 
-	FROM comment
-	WHERE board_no = ?
-	ORDER BY comment_no DESC
-    
-	이슈) 댓글도 페이징이 필요하다
-	LIMIT ?, ? 
-	*/
-	
 	
 	String commentSql = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC";
 	PreparedStatement commentStmt = conn.prepareStatement(commentSql);
@@ -46,6 +32,7 @@
 	ResultSet commentRs = commentStmt.executeQuery();
 	
 	ArrayList<Comment> commentList = new ArrayList<Comment>();
+	
 	while(commentRs.next()) {
 		Comment c=new Comment();
 		c.commentNo=commentRs.getInt("commentNo");
@@ -94,7 +81,6 @@
 		Memo m=new Memo();
 		m.commentNo=listRs.getInt("commentNo");
 		m.commentContent=listRs.getString("commentContent");
-		m.commentNo=listRs.getInt("commentNo");
 		memoList.add(m);
 	}
 
@@ -146,7 +132,6 @@
 		<h2>댓글입력</h2>
 		<form action="<%=request.getContextPath()%>/board/insertCommentAction.jsp" method="post">
 			<input type="hidden" name="boardNo" value="<%=board.boardNo%>">
-			<input type="hidden" name="commentNo">
 			<table>
 				<tr>
 					<td>내용</td>
@@ -175,17 +160,37 @@
 					<div>
 						<span><%=c.commentContent%></span>
 						<span><%=c.createdate%></span>
-						<span>
-							<a href="<%=request.getContextPath()%>/board/updateCommentForm.jsp?boardNo=<%=boardNo%>&commentNo=<%=c.commentNo%>">수정</a>
-							<a href="<%=request.getContextPath()%>/board/deleteCommentForm.jsp?boardNo=<%=board.boardNo%>&currentPage=<%=currentPage%>">삭제</a>
-							<!-- 보드넘버를 넘기지 않으면 댓글을 지우고 돌아갈 페이지를 잃게 된다--> 
-						</span>
 					</div>
 				</div>
 		<%		
 			}
 		%>
 	</div>
+	
+	<!-- 댓글삭제 -->
+	<div>
+		<h5>댓글 삭제</h5>
+	</div>
+	
+		<% 
+			String msg = request.getParameter("msg"); 
+		%>
+	
+	<form action="<%=request.getContextPath()%>/board/deleteCommentAction.jsp" method="post">
+		<input type="hidden" name="boardNo" value="<%=boardNo%>">
+			비밀번호 :
+		<input type="password" name="commentPw">
+		<button type="submit">삭제</button>
+	  
+	  	<%
+			if(msg != null) {
+		%>		
+			<div><%=msg%></div>
+		<%		
+			}
+		%>
+	</form>
+	
 	
 	<!-- 댓글 페이징 -->
 	
@@ -207,8 +212,5 @@
 		%>
 		<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=lastPage%>">마지막</a>
 	</div>
-	
-	<!-- 다음페이지를 구하려면 마지막페이지를, 마지막페이지를 구하려면 데이터 전체 행의 수를 구해야한다 -->
-
 </body>
 </html>
