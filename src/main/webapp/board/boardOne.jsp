@@ -199,13 +199,19 @@
 		%>
 		<span><%=currentPage%></span>
 		<%
-			if(currentPage < lastPage) {
+			if((currentPage != 1) && (currentPage < lastPage)) {
 		%>
 				<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=currentPage+1%>">다음</a>
 		<%
 			}
 		%>
-		<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=lastPage%>">마지막</a>
+		<%
+			if((currentPage != 1) && (currentPage == lastPage)) {
+		%>
+			<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=lastPage%>">마지막</a>
+		<%
+			}
+		%>	
 	</div>
 	
 	<!-- 다음페이지를 구하려면 마지막페이지를, 마지막페이지를 구하려면 데이터 전체 행의 수를 구해야한다 -->
