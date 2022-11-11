@@ -40,8 +40,6 @@
 		c.createdate=commentRs.getString("createdate");
 		commentList.add(c);
 	}
-
-	
 	
 	String commentSql2 = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC";
 	PreparedStatement commentStmt2 = conn.prepareStatement(commentSql2);
@@ -56,8 +54,9 @@
 		reply.createdate=commentRs2.getString("createdate");
 	}
 	
-	//--------------------------------------------------------------------------
-	//댓글 페이징
+	
+	
+	//댓글 페이징-----------------------------------------------------
 	
 	// 1 요청분석
 	int currentPage=1;
@@ -65,7 +64,6 @@
 		currentPage=Integer.parseInt(request.getParameter("currentPage"));
 	}
 	
-
 	// 2
 	int rowPerPage=5; // 한 페이지당 보여줄 댓글 수 
 	int beginRow=(currentPage-1) * rowPerPage; // 몇 번째 행부터 보여지는가?
@@ -141,10 +139,8 @@
 		<a href="<%=request.getContextPath()%>/board/updateBoardForm.jsp?boardNo=<%=boardNo%>">수정</a>
 		<a href="<%=request.getContextPath()%>/board/deleteBoardForm.jsp?boardNo=<%=boardNo%>">삭제</a>
 
-
+	<!-- 댓글입력폼 -->
 	<div>
-		<!-- 댓글입력폼 -->
-		
 		<h2>댓글수정</h2>
 		<form action="<%=request.getContextPath()%>/board/updateCommentAction.jsp" method="post">
 			<input type="hidden" name="boardNo" value="<%=board.boardNo%>">
@@ -185,7 +181,6 @@
 	</div>
 	
 	<!-- 댓글 페이징 -->
-	
 	<div>
 		<%
 			if(currentPage > 1) { // 현재페이지가 1이라면 이전으로 넘어가능 링크는 나오지 않는다
@@ -204,8 +199,6 @@
 		%>
 		<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=lastPage%>">마지막</a>
 	</div>
-	
 	<!-- 다음페이지를 구하려면 마지막페이지를, 마지막페이지를 구하려면 데이터 전체 행의 수를 구해야한다 -->
-
 </body>
 </html>

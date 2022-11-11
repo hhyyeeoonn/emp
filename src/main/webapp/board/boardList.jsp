@@ -10,7 +10,6 @@
 	if(request.getParameter("currentPage") != null) {
 		currentPage=Integer.parseInt(request.getParameter("currentPage"));
 	}
-	
 
 	// 2 요청처리 후 필요하다면 모델데이터를 생성
 	final int ROW_PER_PAGE=10; //int 앞에 final이 붙으면 변하지 않는 상수가 된다 상수는 대문자로 적어서(단어구분은 중간 언더바로) 이름만 보고도 이게 상수라는 걸 알 수 있게 한다
@@ -46,9 +45,6 @@
 
 %>
 
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,14 +57,11 @@
 		<jsp:include page="/inc/menu.jsp"></jsp:include>
 	</div>
 
-
-	<h1>자유게시판</h1>
 	<!-- 3.1 모델데이터(ArrayList<Board>) 출력 -->
+	<h1>자유게시판</h1>
 		<div>
 			<a href="<%=request.getContextPath()%>/board/insertBListForm.jsp">새 게시글 작성</a>
 		</div>
-	
-	
 		<table>
 			<tr>
 				<th>No</th>
@@ -92,7 +85,6 @@
 		
 		</table>
 
-	
 	<!-- 3.2 페이징 currentPage만 바뀐다-->
 	<div>
 		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
@@ -114,11 +106,5 @@
 		%>
 		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>">마지막</a>
 	</div>
-	
-	
-	
-	
-	
-	
 </body>
 </html>

@@ -7,7 +7,6 @@
 	// 1
 	int boardNo=Integer.parseInt(request.getParameter("boardNo"));	
 
-
 	// 2 게시글 하나
 	Class.forName("org.mariadb.jdbc.Driver"); //요청처리
 	Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/employees", "root", "java1234");
@@ -25,20 +24,6 @@
 		board.boardWriter=boardRs.getString("boardWriter");
 		board.createdate=boardRs.getString("createdate");
 	}
-
-	// 2.2 댓글 목록
-	 
-	/*
-	댓글도 페이징이 필요하다
-	SELECT comment_no commentNo, comment_content commentContent 
-	FROM comment
-	WHERE board_no = ?
-	ORDER BY comment_no DESC
-    
-	이슈) 댓글도 페이징이 필요하다
-	LIMIT ?, ? 
-	*/
-	
 	
 	String commentSql = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC";
 	PreparedStatement commentStmt = conn.prepareStatement(commentSql);
@@ -54,9 +39,8 @@
 		commentList.add(c);
 	}
 
-	
-	//--------------------------------------------------------------------------
-	//댓글 페이징
+
+	//댓글 페이징--------------------------------------------------------------------------
 	
 	// 1 요청분석
 	int currentPage=1;
@@ -140,10 +124,9 @@
 		<a href="<%=request.getContextPath()%>/board/updateBoardForm.jsp?boardNo=<%=boardNo%>">수정</a>
 		<a href="<%=request.getContextPath()%>/board/deleteBoardForm.jsp?boardNo=<%=boardNo%>">삭제</a>
 
-
+	<!-- 댓글입력폼 -->
 	<div>
-		<!-- 댓글입력폼 -->
-		<h2>댓글입력</h2>
+		<h3>댓글입력</h3>
 		<form action="<%=request.getContextPath()%>/board/insertCommentAction.jsp" method="post">
 			<input type="hidden" name="boardNo" value="<%=board.boardNo%>">
 			<input type="hidden" name="commentNo">
@@ -188,7 +171,6 @@
 	</div>
 	
 	<!-- 댓글 페이징 -->
-	
 	<div>
 		<%
 			if(currentPage > 1) { // 현재페이지가 1이라면 이전으로 넘어가능 링크는 나오지 않는다
@@ -213,8 +195,6 @@
 			}
 		%>	
 	</div>
-	
 	<!-- 다음페이지를 구하려면 마지막페이지를, 마지막페이지를 구하려면 데이터 전체 행의 수를 구해야한다 -->
-
 </body>
 </html>

@@ -13,7 +13,6 @@
 	String commentPw=request.getParameter("commentPw");
 	String commentContent=request.getParameter("commentContent");
 	
-	
 	System.out.println(boardNo);
 	System.out.println(commentPw);
 	System.out.println(commentNo);
