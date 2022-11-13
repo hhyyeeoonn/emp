@@ -54,7 +54,7 @@
 		return;
 	}
 	// equals 메소드는 비교하고자 하는 대상의 내용 자체를 비교/ == 연산자는 비교하고자 하는 대상의 참조값을 비교
-	
+	// !(equals.()) == !=
 	
 	String sql="UPDATE board SET board_title=?, board_content=?, board_writer=?, createdate=CURDATE() WHERE board_no=?"; 
 	PreparedStatement stmt=conn.prepareStatement(sql);  
