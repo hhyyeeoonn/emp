@@ -87,8 +87,13 @@
 
 	<!-- 3.2 페이징 currentPage만 바뀐다-->
 	<div>
-		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
-		
+		<%
+			if(currentPage > 1) {
+		%>
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
+		<%
+			}
+		%>
 		<% // currentPage가 처음페이지면 화면에 이전페이지링크가 출력되면 안된다 반대로 마지막페이지에도 다음페이지링크가 나오면 안된다
 			if(currentPage > 1) {
 		%>
@@ -96,7 +101,15 @@
 		<%
 			}
 		%>
+		<%	
+			if(currentPage > 1) {
+		%>
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>"><%=currentPage-1%></a>
+		<%
+			}
+		%>
 		<span><%=currentPage%></span>
+		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>"><%=currentPage+1%></a>
 		<%
 			if(currentPage < lastPage) {
 		%>

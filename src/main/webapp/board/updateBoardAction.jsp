@@ -35,7 +35,6 @@
 	System.out.println("드라이버 로딩"); 
 	
 	
-	/*
 	String PwSql="SELECT board_pw boardPw FROM board WHERE board_no=?"; 
 	PreparedStatement pwStmt=conn.prepareStatement(PwSql);  
 	pwStmt.setInt(1, boardNo);
@@ -48,13 +47,12 @@
 		password=pwRs.getString("boardPw");
 	} 
 
-	if(boardPw != password) {
+	if(!boardPw.equals(password)) {
 		System.out.println("비밀번호");
 		String msg=URLEncoder.encode("비밀번호를 확인하세요", "utf-8");
 		response.sendRedirect(request.getContextPath() + "/board/updateBoardForm.jsp?boardNo="+boardNo+"&msg="+msg);
 		return;
 	}
-	*/
 	
 	
 	

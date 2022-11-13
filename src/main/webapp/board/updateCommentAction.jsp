@@ -22,7 +22,27 @@
 	Connection conn=DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
 	System.out.println("드라이버 로딩"); 
 	
+	// 댓글 수정을 위한 비밀번호 확인 
+	String PwSql="SELECT comment_pw commentPw FROM comment WHERE comment_no=?"; 
+	PreparedStatement pwStmt=conn.prepareStatement(PwSql);  
+	pwStmt.setInt(1, commentNo);
+	ResultSet pwRs=pwStmt.executeQuery(); 
 	
+	String password=null;
+	
+	if(pwRs.next()){
+		password=pwRs.getString("commentPw");
+		System.out.println(password);
+		System.out.println(">>>"+commentPw);
+	} 
+	
+	if(!commentPw.equals(password)) {
+		System.out.println("비밀번호");
+		String msg=URLEncoder.encode("비밀번호를 확인하세요", "utf-8");
+		response.sendRedirect(request.getContextPath() + "/board/updateCommentForm.jsp?boardNo="+boardNo+"&commentNo="+commentNo+"&msg="+msg);
+		return;
+	}
+		
 	
 	String sql="UPDATE comment SET comment_content=?, createdate=CURDATE() WHERE board_no=? AND comment_no=?"; 
 	PreparedStatement stmt=conn.prepareStatement(sql);  

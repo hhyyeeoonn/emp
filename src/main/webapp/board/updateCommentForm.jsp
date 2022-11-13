@@ -26,20 +26,6 @@
 		board.createdate=boardRs.getString("createdate");
 	}
 	
-	String commentSql = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC";
-	PreparedStatement commentStmt = conn.prepareStatement(commentSql);
-	commentStmt.setInt(1, boardNo);
-	ResultSet commentRs = commentStmt.executeQuery();
-	
-	ArrayList<Comment> commentList = new ArrayList<Comment>();
-	
-	while(commentRs.next()) {
-		Comment c=new Comment();
-		c.commentNo=commentRs.getInt("commentNo");
-		c.commentContent=commentRs.getString("commentContent");
-		c.createdate=commentRs.getString("createdate");
-		commentList.add(c);
-	}
 	
 	String commentSql2 = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC";
 	PreparedStatement commentStmt2 = conn.prepareStatement(commentSql2);
@@ -62,6 +48,7 @@
 	int currentPage=1;
 	if(request.getParameter("currentPage") != null) {
 		currentPage=Integer.parseInt(request.getParameter("currentPage"));
+		System.out.println(currentPage);
 	}
 	
 	// 2
@@ -82,21 +69,20 @@
 	// Math.ceil 올림값을 얻을 수 있다
 
 	
-	String listSql="SELECT comment_no commentNo, comment_content commentContent FROM comment ORDER BY comment_no DESC LIMIT ?, ?";
-	PreparedStatement listStmt=conn.prepareStatement(listSql);
-	listStmt.setInt(1, beginRow); //int beginRow=(currentPage-1)*ROW_PER_PAGE;
-	listStmt.setInt(2, rowPerPage);
+	String commentSql = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC LIMIT ?, ?";
+	PreparedStatement commentStmt = conn.prepareStatement(commentSql);
+	commentStmt.setInt(1, boardNo);
+	commentStmt.setInt(2, beginRow);
+	commentStmt.setInt(3, rowPerPage);
+	ResultSet commentRs = commentStmt.executeQuery();
 	
-	ResultSet listRs=listStmt.executeQuery(); 
-	
-	ArrayList<Memo> memoList=new ArrayList<Memo>(); 
-	
-	
-	while(listRs.next()) {
-		Memo m=new Memo();
-		m.commentNo=listRs.getInt("commentNo");
-		m.commentContent=listRs.getString("commentContent");
-		memoList.add(m);
+	ArrayList<Comment> commentList = new ArrayList<Comment>();
+	while(commentRs.next()) {
+		Comment c=new Comment();
+		c.commentNo=commentRs.getInt("commentNo");
+		c.commentContent=commentRs.getString("commentContent");
+		c.createdate=commentRs.getString("createdate");
+		commentList.add(c);
 	}
 	
 %>
@@ -161,43 +147,79 @@
 			</table>
 			<button type="submit">댓글수정</button>
 		</form>
+		<%
+			if(request.getParameter("msg") != null) {
+		%>
+		<div>
+			<h5><small><%=request.getParameter("msg")%></small></h5>
+		</div>
+		<%
+			}
+		%>
 	</div>		
 
 	<!-- 댓글 목록 -->
 	<div>
 		<h2>댓글목록</h2>
-		<%
-			for(Comment c : commentList) {
-		%>
-				<div>
-					<div>
-						<span><%=c.commentContent%></span>
-						<span><%=c.createdate%></span>
-					</div>
-				</div>
-		<%		
-			}
-		%>
+		<table>
+			
+			<%
+				for(Comment c : commentList) {
+			%>
+			<tr>
+				<td><%=c.commentContent%></td>
+				<td><%=c.createdate%></td>
+			</tr>
+			<%		
+				}
+			%>
+			<tr>
+				<td>
+				<%
+					if(request.getParameter("msg") != null) {
+				%>
+					<h4><small><%=request.getParameter("msg")%></small></h4>
+				<%
+					}
+				%>
+				</td>
+			</tr>
+		</table>
 	</div>
 	
 	<!-- 댓글 페이징 -->
 	<div>
 		<%
+			if(currentPage > 1) {
+		%>
+			<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=1">처음</a>
+		<%
+			}
+		%>
+		<%
 			if(currentPage > 1) { // 현재페이지가 1이라면 이전으로 넘어가능 링크는 나오지 않는다
 		%>
-				<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=currentPage-1%>">이전</a>
+				<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage-1%>">이전</a>
+		<%
+			}
+		%>
+		<%
+			if(currentPage > 1) {
+		%>
+			<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage-1%>"><%=currentPage-1%></a>
 		<%
 			}
 		%>
 		<span><%=currentPage%></span>
+		<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage+1%>"><%=currentPage+1%></a>
 		<%
 			if(currentPage < lastPage) {
 		%>
-				<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=currentPage+1%>">다음</a>
+				<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=currentPage+1%>">다음</a>
 		<%
 			}
 		%>
-		<a href="<%=request.getContextPath()%>/board/boardOne.jsp?currentPage=<%=lastPage%>">마지막</a>
+		<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=boardNo%>&currentPage=<%=lastPage%>">마지막</a>
 	</div>
 	<!-- 다음페이지를 구하려면 마지막페이지를, 마지막페이지를 구하려면 데이터 전체 행의 수를 구해야한다 -->
 </body>
