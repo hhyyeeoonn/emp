@@ -25,25 +25,9 @@
 		board.boardWriter=boardRs.getString("boardWriter");
 		board.createdate=boardRs.getString("createdate");
 	}
-	
-	String commentSql = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC";
-	PreparedStatement commentStmt = conn.prepareStatement(commentSql);
-	commentStmt.setInt(1, boardNo);
-	ResultSet commentRs = commentStmt.executeQuery();
-	
-	ArrayList<Comment> commentList = new ArrayList<Comment>();
-	
-	while(commentRs.next()) {
-		Comment c=new Comment();
-		c.commentNo=commentRs.getInt("commentNo");
-		c.commentContent=commentRs.getString("commentContent");
-		c.createdate=commentRs.getString("createdate");
-		commentList.add(c);
-	}
 
-	
-	//--------------------------------------------------------------------------
-	//댓글 페이징
+
+	//댓글 페이징--------------------------------------------------------------------------
 	
 	// 1 요청분석
 	int currentPage=1;
@@ -51,7 +35,6 @@
 		currentPage=Integer.parseInt(request.getParameter("currentPage"));
 	}
 	
-
 	// 2
 	int rowPerPage=5; // 한 페이지당 보여줄 댓글 수 
 	int beginRow=(currentPage-1) * rowPerPage; // 몇 번째 행부터 보여지는가?
@@ -69,21 +52,22 @@
 	
 	// Math.ceil 올림값을 얻을 수 있다
 
+	String commentSql = "SELECT comment_no commentNo, comment_content commentContent, createdate FROM comment WHERE board_no = ? ORDER BY comment_no DESC LIMIT ?, ?";
+	PreparedStatement commentStmt = conn.prepareStatement(commentSql);
+	commentStmt.setInt(1, boardNo);
+	commentStmt.setInt(2, beginRow);
+	commentStmt.setInt(3, rowPerPage);
+	ResultSet commentRs = commentStmt.executeQuery();
 	
-	String listSql="SELECT comment_no commentNo, comment_content commentContent FROM comment ORDER BY comment_no DESC LIMIT ?, ?";
-	PreparedStatement listStmt=conn.prepareStatement(listSql);
-	listStmt.setInt(1, beginRow); //int beginRow=(currentPage-1)*ROW_PER_PAGE;
-	listStmt.setInt(2, rowPerPage);
-	
-	ResultSet listRs=listStmt.executeQuery(); 
-	ArrayList<Memo> memoList=new ArrayList<Memo>(); 
-	while(listRs.next()) {
-		Memo m=new Memo();
-		m.commentNo=listRs.getInt("commentNo");
-		m.commentContent=listRs.getString("commentContent");
-		memoList.add(m);
+	ArrayList<Comment> commentList = new ArrayList<Comment>();
+	while(commentRs.next()) {
+		Comment c=new Comment();
+		c.commentNo=commentRs.getInt("commentNo");
+		c.commentContent=commentRs.getString("commentContent");
+		c.createdate=commentRs.getString("createdate");
+		commentList.add(c);
 	}
-
+	
 %>
 
 

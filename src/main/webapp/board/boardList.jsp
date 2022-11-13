@@ -50,74 +50,107 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+	<style>
+		a { 
+			text-decoration:none
+		}
+		
+		a:link { 
+		 	text-decoration:none; color:#000000;
+		 }
+
+ 		a:visited { 
+ 			text-decoration:none;color:#000000;
+ 		}
+
+ 		a:active {
+ 			text-decoration:none; color:#000000; 
+ 		}
+
+ 		a:hover { 
+ 			text-decoration:none; color:#000000;
+ 		}
+	</style>
+
 </head>
 <body>
 	<!-- 메뉴 partial jsp 구성 -->
-	<div>
+	<div class="container">
 		<jsp:include page="/inc/menu.jsp"></jsp:include>
 	</div>
-
+	<br>
+	
 	<!-- 3.1 모델데이터(ArrayList<Board>) 출력 -->
-	<h1>자유게시판</h1>
+	<div class="container">
+		<h1>자유게시판</h1>
+			<div>
+				<a href="<%=request.getContextPath()%>/board/insertBListForm.jsp">새 게시글 작성</a>
+			</div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>제목</th>
+					</tr>
+				</thead>
+				<tbody>
+						<%
+							for(Board b : boardList) {
+						
+						%>
+					<tr>
+						<td><%=b.boardNo%></td>
+						<td> <!-- 제목을 클릭하면 상세보기로 이동 -->
+							<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
+								<%=b.boardTitle%>
+							</a>
+						</td>
+					</tr>
+						<%
+							}
+						%>
+				</tbody>
+			</table>
+	
+	
+		<!-- 3.2 페이징 currentPage만 바뀐다-->
 		<div>
-			<a href="<%=request.getContextPath()%>/board/insertBListForm.jsp">새 게시글 작성</a>
+			<%
+				if(currentPage > 1) {
+			%>
+				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
+			<%
+				}
+			%>
+			<% 
+				if(currentPage > 3) {
+			%>
+					<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-3%>">이전</a>
+			<%
+				}
+			%>
+			<%	
+				if(currentPage > 1) {
+			%>
+				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>"><%=currentPage-1%></a>
+			<%
+				}
+			%>
+			<span><%=currentPage%></span>
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>"><%=currentPage+1%></a>
+			<%
+				if(currentPage < lastPage) {
+			%>
+					<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+3%>">다음</a>
+			<%
+				}
+			%>
+			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>">마지막</a>
 		</div>
-		<table>
-			<tr>
-				<th>No</th>
-				<th>제목</th>
-			</tr>
-				<%
-					for(Board b : boardList) {
-				
-				%>
-			<tr>
-				<td><%=b.boardNo%></td>
-				<td> <!-- 제목을 클릭하면 상세보기로 이동 -->
-					<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
-						<%=b.boardTitle%>
-					</a>
-				</td>
-			</tr>
-				<%
-					}
-				%>
-		
-		</table>
-
-	<!-- 3.2 페이징 currentPage만 바뀐다-->
-	<div>
-		<%
-			if(currentPage > 1) {
-		%>
-			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=1">처음</a>
-		<%
-			}
-		%>
-		<% // currentPage가 처음페이지면 화면에 이전페이지링크가 출력되면 안된다 반대로 마지막페이지에도 다음페이지링크가 나오면 안된다
-			if(currentPage > 1) {
-		%>
-				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>">이전</a>
-		<%
-			}
-		%>
-		<%	
-			if(currentPage > 1) {
-		%>
-			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage-1%>"><%=currentPage-1%></a>
-		<%
-			}
-		%>
-		<span><%=currentPage%></span>
-		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>"><%=currentPage+1%></a>
-		<%
-			if(currentPage < lastPage) {
-		%>
-				<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=currentPage+1%>">다음</a>
-		<%
-			}
-		%>
-		<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>">마지막</a>
 	</div>
 </body>
 </html>
