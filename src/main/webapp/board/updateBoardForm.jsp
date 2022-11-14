@@ -12,7 +12,6 @@
 		return;
 	}
 	
-	
 	int boardNo=Integer.parseInt(request.getParameter("boardNo"));
 	
 	//2.요청처리
@@ -28,7 +27,7 @@
 	ResultSet rs=stmt.executeQuery(); 
 	
 
-	ArrayList<Board> list = new ArrayList<Board>(); //어차피 데이터는 하나니까 굳이 배열을 만들 필요가 없겠구나...
+	ArrayList<Board> list = new ArrayList<Board>(); 
 	
 	while(rs.next()) { 
 		Board b=new Board();
@@ -99,9 +98,7 @@
 			}
 		%>
 				
-				
-		
-		
+
 	<%
 		if(request.getParameter("msg") != null) {
 	%>
@@ -110,8 +107,7 @@
 		</div>
 	<%
 		}
-	%>
-			
+	%>	
 </div>
 </body>
 </html>

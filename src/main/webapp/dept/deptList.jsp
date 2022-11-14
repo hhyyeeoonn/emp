@@ -25,15 +25,13 @@
 		list.add(d);
 	}
 	// 3.출력(View) -> 모델데이터를 고객(최종사용자)이 원하는 형태로 출력 -> 뷰(리포트)
-	
-
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>deptList</title>
 </head>
 <body>
 	<!-- 메뉴 - 부분페이지로... partial jsp 구성-->
@@ -44,14 +42,14 @@
 
 	<h1>DEPT LIST</h1>
 	<div>
-		<table>
-			<tr>
-				<th>부서번호</th>
-				<th>부서명</th>
-				<th></th>
-				<th></th>
-			</tr>
-			<%
+	<table>
+		<tr>
+			<th>부서번호</th>
+			<th>부서명</th>
+			<th></th>
+			<th></th>
+		</tr>
+			<% 
 				for(Department d:list) { // 자바문법에서 제공하는 Foreach문
 			%>
 			<tr>
@@ -75,6 +73,5 @@
 		</table>
 	</div>
 	<br>
-	
 </body>
 </html>
