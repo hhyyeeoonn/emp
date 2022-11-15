@@ -3,6 +3,7 @@
 <%@ page import = "vo.*" %> 
 <%@ page import = "java.util.*" %>
 <%
+int cnt1=0;
 	//페이징
 	int currentPage=1;
 	if(request.getParameter("currentPage") != null) {
@@ -10,7 +11,7 @@
 	}
 	request.setCharacterEncoding("utf-8");
 	String word = request.getParameter("word");
-	
+	System.out.println("디버깅" + cnt1++);
 	
 	// 드라이버 로딩 
 	String driver="org.mariadb.jdbc.Driver"; // 변수를 사용하면 유지보수에 용이
@@ -34,20 +35,20 @@
 		word="";
 	}
 	
-	int wordNum=0;
+	System.out.println("디버깅" + cnt1++);
 	
 	if((word == null) || (word.equals(""))) {
 		cntSql="SELECT COUNT(*) cnt FROM salaries";
 		cntStmt=conn.prepareStatement(cntSql);
 	} else {
-		cntSql = "SELECT COUNT(*) cnt FROM salaries s INNER JOIN employees e WHERE s.emp_no LIKE ? OR e.first_name LIKE ? OR e.last_name LIKE ? OR e.gender LIKE ?";
+		cntSql = "SELECT COUNT(*) cnt FROM salaries s INNER JOIN employees e ON s.emp_no=e.emp_no WHERE e.first_name LIKE ? OR e.last_name LIKE ?";
 	    cntStmt = conn.prepareStatement(cntSql);
 	    cntStmt.setString(1, "%"+word+"%");
 	    cntStmt.setString(2, "%"+word+"%");
-	    cntStmt.setString(3, "%"+word+"%");
-	    cntStmt.setString(4, "%"+word+"%");
 	}
 	ResultSet cntRs=cntStmt.executeQuery();
+	
+	System.out.println("디버깅" + cnt1++);
 	
 	int cnt=0; //전체 행의 수
 	if(cntRs.next()) {
@@ -80,14 +81,12 @@
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
 	} else {
-		sql = "SELECT s.emp_no empNo, s.salary salary, s.from_date fromDate, s.to_date toDate, e.first_name firstName, e.last_name lastName FROM salaries s INNER JOIN employees e ON s.emp_no = e.emp_no WHERE s.emp_no LIKE ? OR e.first_name LIKE ? OR e.last_name LIKE ? OR e.gender LIKE ? ORDER BY s.emp_no ASC LIMIT ?, ?";
+		sql = "SELECT s.emp_no empNo, s.salary salary, s.from_date fromDate, s.to_date toDate, e.first_name firstName, e.last_name lastName FROM salaries s INNER JOIN employees e ON s.emp_no = e.emp_no WHERE e.first_name LIKE ? OR e.last_name LIKE ? ORDER BY s.emp_no ASC LIMIT ?, ?";
 		stmt = conn.prepareStatement(sql);
 		stmt.setString(1, "%"+word+"%");
 	    stmt.setString(2, "%"+word+"%");
-	    stmt.setString(3, "%"+word+"%");
-	    stmt.setString(3, "%"+word+"%");
-		stmt.setInt(4, beginRow);
-		stmt.setInt(5, rowPerPage);
+		stmt.setInt(3, beginRow);
+		stmt.setInt(4, rowPerPage);
 	}
 	ResultSet rs=stmt.executeQuery();
 	
@@ -105,7 +104,7 @@
 		salaryList.add(s);
 	}
 	*/
-		
+	
 	ArrayList<HashMap<String, Object>> list=new ArrayList<HashMap<String, Object>>(); // class Salary... ArrayList<Salary> salaryList = new ArrayList<>();
 	while(rs.next()) {
 		HashMap<String, Object> m=new HashMap<String, Object>(); // class Salary... Salary s = new Salary();
@@ -200,7 +199,7 @@
 		<!-- 검색기능 -->
 		<div>
 			<form action="<%=request.getContextPath()%>/salary/salaryMapList.jsp" method="post">
-				<label for="word">찾기 : </label>
+				<label for="word">사원검색 : </label>
 				<input type="text" name="word" id="word" value="<%=word%>">
 				<button type="submit">&#128269;</button>
 				<button type="button" onclick="location.href='salaryList.jsp'">전체목록보기</button>

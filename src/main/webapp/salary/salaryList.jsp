@@ -53,7 +53,7 @@
 	stmt.setInt(1, beginRow);
 	stmt.setInt(2, rowPerPage);
 	ResultSet rs = stmt.executeQuery();
-	ArrayList<Salary> salaryList = new ArrayList<>();
+	ArrayList<Salary> salaryList = new ArrayList<Salary>();
 	while(rs.next()) {
 		Salary s = new Salary();
 		s.emp = new Employee(); // ☆☆☆☆☆
@@ -64,7 +64,14 @@
 		s.emp.firstName = rs.getString("firstName");
 		s.emp.lastName = rs.getString("lastName");
 		salaryList.add(s);
+		int cnt1=0;
+		System.out.println(cnt1++);
 	}
+	
+	
+	rs.close();
+	stmt.close();
+	conn.close();
 %>
 <!DOCTYPE html>
 <html>
@@ -142,10 +149,10 @@
 		<!-- 검색기능 -->
 		<div>
 			<form action="<%=request.getContextPath()%>/salary/salaryMapList.jsp" method="post">
-				<label for="word">찾기 : </label>
+				<label for="word">사원검색 : </label>
 				<input type="text" name="word" id="word">
 				<button type="submit">&#128269;</button>
-				<button type="button" onclick="location.href='deptEmpList.jsp'">전체목록보기</button>
+				<button type="button" onclick="location.href='salaryList.jsp'">전체목록보기</button>
 			</form>
 		</div>
 	</div>
