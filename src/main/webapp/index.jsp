@@ -31,6 +31,11 @@
 				게시판 관리
 			</a>
 		</li>
+		<li>
+			<a href="<%=request.getContextPath()%>/salary/salaryList.jsp">
+				사원별 연봉정보
+			</a>
+		</li>
 	</ol>
 </body>
 </html>

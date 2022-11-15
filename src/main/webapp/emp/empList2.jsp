@@ -54,7 +54,8 @@
 	int lastPage = count / rowPerPage;
 	if(count % rowPerPage != 0) {
 		lastPage = lastPage + 1; 
-	System.out.println(count+"<<<<<cnt");
+	}
+		System.out.println(count+"<<<<<cnt");
 	
 	
 	
@@ -69,7 +70,7 @@
 		empStmt2.setInt(1, rowPerPage * (currentPage - 1)); //int beginRow=(currentPage-1)*ROW_PER_PAGE;
 		empStmt2.setInt(2, rowPerPage);
 	} else {
-		empSql2= "SELECT emp_no empNo, first_name firstName, last_name lastName FROM employees WHERE first_name LIKE ? OR last_name lastname LIKE ? ORDER BY emp_no ASC LIMIT ?, ?";
+		empSql2= "SELECT emp_no empNo, first_name firstName, last_name lastName FROM employees WHERE first_name LIKE ? OR last_name LIKE ? ORDER BY emp_no ASC LIMIT ?, ?";
 		empStmt2 = conn.prepareStatement(empSql2);
 		empStmt2.setString(1, "%"+word+"%");
 		empStmt2.setString(2, "%"+word+"%");
@@ -158,8 +159,10 @@
 		<form action="<%=request.getContextPath()%>/emp/empList2.jsp" method="post">
 			<label for="word">사원 검색 : </label>
 			<input type="text" name="word" id="word" value="<%=word%>">
-			<button type="submit">검색</button>
+			<button type="submit">검색</button> 
+			<button type="button" onclick="location.href='empList.jsp'">전체목록보기</button>
 		</form>
+		
 	
 </body>
 </html>

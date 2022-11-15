@@ -27,7 +27,7 @@
 	String cntSql=null;
 	PreparedStatement cntStmt=null;
 	
-	if(word == null) {
+	if((word == null) || (word.equals(""))) {
 		cntSql="SELECT COUNT(*) cnt FROM board";
 		cntStmt=conn.prepareStatement(cntSql);
 	} else {
@@ -59,7 +59,7 @@
 	    stmt = conn.prepareStatement(sql);
 	    stmt.setInt(1, beginRow); //int beginRow=(currentPage-1)*ROW_PER_PAGE;
 		stmt.setInt(2, ROW_PER_PAGE);
-	 } else {
+	} else {
 	    /*
 	       SELECT *
 	       FROM departments
@@ -71,7 +71,7 @@
 	    stmt.setString(1, "%"+word+"%");
 	    stmt.setInt(2, beginRow); 
 		stmt.setInt(3, ROW_PER_PAGE);
-		 }
+	}
 		
 		ResultSet rs=stmt.executeQuery(); //모델 source data
 		ArrayList<Board> boardList=new ArrayList<Board>(); //모델의 새로운 데이터
