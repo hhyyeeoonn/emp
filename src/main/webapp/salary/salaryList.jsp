@@ -84,11 +84,11 @@
 
 </head>
 <body>
-<div class="container">
-	<div class="container p-5 my-5 border">
+<div class="container">	
+	<div class="container mt-5">
 		<jsp:include page="/inc/menu.jsp"></jsp:include>
 	</div>
-	<div class="container p-5 my-5 border">
+	<div class="container p-5 mt-3 border">
 		<h3>사원별 연봉정보</h3>
 		<table class="table">
 			<tr>

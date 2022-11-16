@@ -97,72 +97,75 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
-	
-	<!-- 메뉴 partial jsp 구성 -->
-	<div> <!-- jsp 액션태그 모델원에 사용하려고 탄생함 %와 같은 역할-->
-		<jsp:include page="/inc/menu.jsp"></jsp:include> <!-- 서버가 주체 include는 절대주소를 적을 때 context가 필요없다 이미 같은 emp안에 있으니까(?) -->
-	
+<div class="container">	
+	<div class="container mt-5">
+		<jsp:include page="/inc/menu.jsp"></jsp:include>
 	</div>
-
-	<h1>사원목록</h1>
-	<div>현재 페이지 : <%=currentPage%></div>
-	<table border="1">
-		<tr>
-			<th>사원번호</th>
-			<th>퍼스트네임</th>
-			<th>라스트네임</th>
-		</tr>
-		<%
-			for(Employee e : empList) {
-		%>
-				<tr>
-					<td><%=e.empNo%></td>
-					<td><a href="/dept/deptList.jsp"><%=e.firstName%></a></td>
-					<td><%=e.lastName%></td>
-				</tr>
-		<%		
-			}
-		%>
-	</table>
-	
-	
-	<!-- 페이징 코드 -->
-	<div>
-		<%
-			if(currentPage > 1) {				
-		%>
-				<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=1&word=<%=word%>">처음</a>
-				<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=<%=currentPage-1%>&word=<%=word%>">이전</a>
-		<%
-			}
-		%>
-			<span><%=currentPage%></span>
-		<% 
-			if(currentPage < lastPage) {
-		%>
-				<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=<%=currentPage+1%>&word=<%=word%>">다음</a>	
-		<%	
-			}
-		%>
-		<%
-			if((currentPage > 1) && (currentPage <= (lastPage - 1))) {
-		%>
-			<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=<%=lastPage%>&word=<%=word%>">마지막</a>
-		<%
-			}
-		%>
-	</div>
-	
-	<!-- 검색창 -->	
+	<div class="container p-5 mt-3 border">
+		<h1>사원목록</h1>
+		<div>총 페이지: <%=lastPage%></div>
+		<table class="table">
+			<tr>
+				<th>사원번호</th>
+				<th>퍼스트네임</th>
+				<th>라스트네임</th>
+			</tr>
+			<%
+				for(Employee e : empList) {
+			%>
+					<tr>
+						<td><%=e.empNo%></td>
+						<td><a href="/dept/deptList.jsp"><%=e.firstName%></a></td>
+						<td><%=e.lastName%></td>
+					</tr>
+			<%		
+				}
+			%>
+		</table>
+		
+		
+		<!-- 페이징 코드 -->
+		<div>
+			<%
+				if(currentPage > 1) {				
+			%>
+					<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=1&word=<%=word%>">처음</a>
+					<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=<%=currentPage-1%>&word=<%=word%>">이전</a>
+			<%
+				}
+			%>
+				<span><%=currentPage%></span>
+			<% 
+				if(currentPage < lastPage) {
+			%>
+					<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=<%=currentPage+1%>&word=<%=word%>">다음</a>	
+			<%	
+				}
+			%>
+			<%
+				if((currentPage > 1) && (currentPage <= (lastPage - 1))) {
+			%>
+				<a href="<%=request.getContextPath()%>/emp/empList2.jsp?currentPage=<%=lastPage%>&word=<%=word%>">마지막</a>
+			<%
+				}
+			%>
+		</div>
+		
+		
+		<!-- 검색창 -->	
 		<form action="<%=request.getContextPath()%>/emp/empList2.jsp" method="post">
 			<label for="word">사원 검색 : </label>
 			<input type="text" name="word" id="word" value="<%=word%>">
 			<button type="submit">검색</button> 
 			<button type="button" onclick="location.href='empList.jsp'">전체목록보기</button>
 		</form>
-		
-	
+	</div>
+</div>
 </body>
 </html>
