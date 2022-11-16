@@ -5,15 +5,15 @@
 
 
 <%
-	// 1 요청분석
+	// 
 	int currentPage=1;
 	if(request.getParameter("currentPage") != null) {
 		currentPage=Integer.parseInt(request.getParameter("currentPage"));
 	}
 
-	// 2 요청처리 후 필요하다면 모델데이터를 생성
-	final int ROW_PER_PAGE=10; //int 앞에 final이 붙으면 변하지 않는 상수가 된다 상수는 대문자로 적어서(단어구분은 중간 언더바로) 이름만 보고도 이게 상수라는 걸 알 수 있게 한다
-	int beginRow=(currentPage-1)*ROW_PER_PAGE; // ...Limit ?=beginRow, ?=ROW_PER_PAGE 
+	// 
+	final int ROW_PER_PAGE=10; 
+	int beginRow=(currentPage-1)*ROW_PER_PAGE; 
 
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn=DriverManager.getConnection("jdbc:mariadb://localhost:3306/employees", "root", "java1234");
@@ -26,16 +26,16 @@
 		cnt=cntRs.getInt("cnt");
 	}
 	
-	// 나누어 떨어지면 그대로 나누어 떨어지지 않으면 +1 double은 5가 아니가 5.0이므로 int로 변환
-	int lastPage=(int)(Math.ceil((double)cnt / (double)ROW_PER_PAGE)); //소수점으로 계산되므로 올림
+	
+	int lastPage=(int)(Math.ceil((double)cnt / (double)ROW_PER_PAGE)); 
 	
 	String listSql="SELECT board_no boardNo, board_title boardTitle FROM board ORDER BY board_no DESC LIMIT ?, ?";
 	PreparedStatement listStmt=conn.prepareStatement(listSql);
 	listStmt.setInt(1, beginRow); //int beginRow=(currentPage-1)*ROW_PER_PAGE;
 	listStmt.setInt(2, ROW_PER_PAGE);
 	
-	ResultSet listRs=listStmt.executeQuery(); //모델 source data
-	ArrayList<Board> boardList=new ArrayList<Board>(); //모델의 새로운 데이터
+	ResultSet listRs=listStmt.executeQuery(); 
+	ArrayList<Board> boardList=new ArrayList<Board>(); 
 	while(listRs.next()) {
 		Board b=new Board();
 		b.boardNo=listRs.getInt("boardNo");

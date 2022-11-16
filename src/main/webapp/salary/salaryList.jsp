@@ -144,8 +144,8 @@
 				%>
 			</span>
 		</div>
-		
-		
+
+
 		<!-- 검색기능 -->
 		<div>
 			<form action="<%=request.getContextPath()%>/salary/salaryMapList.jsp" method="post">
@@ -157,10 +157,5 @@
 		</div>
 	</div>
 </div>	
-	
-	
-	
-	
-	
 </body>
 </html>
