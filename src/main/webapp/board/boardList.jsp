@@ -59,7 +59,6 @@
 	</div>
 	<br>
 
-
 	<!-- 3.1 모델데이터(ArrayList<Board>) 출력 -->
 	<h1 class="text-center">자유게시판</h1>
 	<div class="container p-5 my-5 border">
