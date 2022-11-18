@@ -2,8 +2,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="vo.*"%>
-
-
 <%
 	// 
 	int currentPage=1;
@@ -50,72 +48,49 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-
-	<style>
-		a { 
-			text-decoration:none
-		}
-		
-		a:link { 
-		 	text-decoration:none; color:#000000;
-		 }
-
- 		a:visited { 
- 			text-decoration:none;color:#000000;
- 		}
-
- 		a:active {
- 			text-decoration:none; color:#000000; 
- 		}
-
- 		a:hover { 
- 			text-decoration:none; color:#000000;
- 		}
-	</style>
-
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<div class="container mt-3">
 	<!-- 메뉴 partial jsp 구성 -->
-	<div class="container">
+	<div class="container mt-5">
 		<jsp:include page="/inc/menu.jsp"></jsp:include>
 	</div>
 	<br>
-	
+
+
 	<!-- 3.1 모델데이터(ArrayList<Board>) 출력 -->
+	<h1 class="text-center">자유게시판</h1>
 	<div class="container p-5 my-5 border">
-		<h1>자유게시판</h1>
-			<div class="justify ">
-				<a href="<%=request.getContextPath()%>/board/insertBListForm.jsp">새 게시글 작성</a>
-			</div>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>제목</th>
-					</tr>
-				</thead>
-				<tbody>
-						<%
-							for(Board b : boardList) {
-						%>
-					<tr>
-						<td><%=b.boardNo%></td>
-						<td> <!-- 제목을 클릭하면 상세보기로 이동 -->
-							<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
-								<%=b.boardTitle%>
-							</a>
-						</td>
-					</tr>
-						<%
-							}
-						%>
-				</tbody>
-			</table>
-	
-	
+		<div>	
+			<a href="<%=request.getContextPath()%>/board/insertBListForm.jsp">새 게시글 작성</a>
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th>제목</th>
+				</tr>
+			</thead>
+			<tbody>
+					<%
+						for(Board b : boardList) {
+					%>
+				<tr>
+					<td><%=b.boardNo%></td>
+					<td> <!-- 제목을 클릭하면 상세보기로 이동 -->
+						<a href="<%=request.getContextPath()%>/board/boardOne.jsp?boardNo=<%=b.boardNo%>">
+							<%=b.boardTitle%>
+						</a>
+					</td>
+				</tr>
+					<%
+						}
+					%>
+			</tbody>
+		</table>
+
 		<!-- 3.2 페이징 currentPage만 바뀐다-->
 		<div>
 			<%
@@ -156,14 +131,14 @@
 			%>
 			<a href="<%=request.getContextPath()%>/board/boardList.jsp?currentPage=<%=lastPage%>">마지막</a>
 		</div>
-		
-		<!-- 검색창 -->	
+	
+	<!-- 검색창 -->	
 		<form action="<%=request.getContextPath()%>/board/boardList2.jsp" method="post">
 			<label for="word">게시글 검색 : </label>
 			<input type="text" name="word" id="word">
 			<button type="submit">검색</button>
 		</form>
-		
 	</div>
+</div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 <ul class="nav nav-pills">
 	<li class="nav-item">
-		<a href="<%=request.getContextPath()%>/index.jsp" class="nav-link active"> 홈 </a>
+		<a href="<%=request.getContextPath()%>/index.jsp" class="nav-link"> 홈 </a>
 	</li>
 	<li class="nav-item">
 		<a href="<%=request.getContextPath()%>/dept/deptList.jsp" class="nav-link"> 부서관리 </a>

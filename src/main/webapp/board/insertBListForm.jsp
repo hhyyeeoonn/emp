@@ -4,14 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <title>insertBListForm</title>
-
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-	
-
 </head>
 <body>
-
 	<form method="post" action="<%=request.getContextPath()%>/board/insertBListAction.jsp">
 	<div>
 		<span>제목</span>
@@ -33,8 +29,6 @@
 	<div>
 		<textarea row = "30" cols = "100" name = "memo"></textarea>
 	</div>
-	
-	
 	<div>
 		<button type="submit">등록</button>
 	</div>
@@ -48,10 +42,7 @@
 	<%
 		}
 	%>
-	
 	</form>
-	
-	
 </body>
 </html>
 
