@@ -11,7 +11,7 @@
 		<table>
 			<tr>
 				<td>ID</td>
-				<td><input tpye="text" name="id"></td>
+				<td><input type="text" name="id"></td>
 			</tr>
 			<tr>
 				<td>PW</td>
